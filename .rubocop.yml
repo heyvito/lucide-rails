@@ -1,0 +1,37 @@
+AllCops:
+  TargetRubyVersion: 2.6
+  NewCops: enable
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/**.rb
+    - lucide-rails.gemspec
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Metrics/AbcSize:
+  Exclude:
+    - bin/*
+
+Metrics/MethodLength:
+  Exclude:
+    - bin/*
+
+Naming/FileName:
+  Exclude:
+    - lib/lucide-rails.rb
+
+Style/Documentation:
+  Enabled: false

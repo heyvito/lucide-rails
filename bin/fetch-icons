@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "fileutils"
+require "nokogiri"
+require "active_support/gzip"
+
+# path to your application root.
+GEM_ROOT = File.expand_path("..", __dir__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+def clone!
+  system! "git clone --depth 1 https://github.com/lucide-icons/lucide tmp/lucide"
+  FileUtils.mv Dir.glob("tmp/lucide/icons/*.svg"), "icons/original"
+end
+
+def strip!
+  compressed_data = StringIO.new
+
+  Dir.glob("icons/original/*.svg").each do |input|
+    File.open("icons/stripped/#{File.basename(input)}", "wb") do |output|
+      contents = File.read(input)
+      Nokogiri::HTML::DocumentFragment.parse(contents).tap do |svg|
+        stripped = svg.at_css("svg")
+                      .inner_html
+                      .lines
+                      .map(&:strip)
+                      .join
+        compressed_data << "#{File.basename(input, ".*")},"
+        compressed_data << stripped
+        compressed_data << "\x00"
+        output << stripped
+      end
+    end
+  end
+
+  File.open("icons/stripped.bin.gz", "wb") do |bin|
+    bin << ActiveSupport::Gzip.compress(compressed_data.string)
+  end
+end
+
+FileUtils.chdir GEM_ROOT do
+  FileUtils.rm_rf Dir.glob("#{GEM_ROOT}/tmp/*")
+  FileUtils.mkdir_p "icons/original"
+  FileUtils.mkdir_p "icons/stripped"
+
+  clone!
+  strip!
+ensure
+  FileUtils.rm_rf Dir.glob("#{GEM_ROOT}/tmp/*")
+end

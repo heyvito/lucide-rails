@@ -1,0 +1,11 @@
+version: "3"
+volumes:
+  bundle:
+
+services:
+  lucide:
+    image: ruby:3
+    working_dir: /gem
+    volumes:
+      - .:/gem
+      - bundle:/usr/local/bundle
