@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files         = Dir["LICENSE.txt", "README.md", "lib/**/*", "icons/stripped/"]
+  spec.files         = Dir["LICENSE.txt", "README.md", "lib/**/*", "icons/stripped/*", "icons/stripped.bin.gz"]
   spec.require_paths = ["lib"]
 
   spec.add_dependency("railties", ">= 4.1.0")
