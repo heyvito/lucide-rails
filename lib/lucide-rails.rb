@@ -11,6 +11,7 @@ end
 module LucideRails
   # Extracted from options contained in svg tags from original/*.svg
   DEFAULT_OPTIONS = {
+    "aria-hidden" => "true",
     "width" => "24",
     "height" => "24",
     "viewBox" => "0 0 24 24",
