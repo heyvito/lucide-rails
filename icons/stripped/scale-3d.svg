@@ -1,1 +1,1 @@
-<path d="M5 7v12h12"></path><path d="m5 19 6-6"></path><rect x="3" y="3" width="4" height="4" rx="1"></rect><rect x="17" y="17" width="4" height="4" rx="1"></rect>
+<circle cx="19" cy="19" r="2"></circle><circle cx="5" cy="5" r="2"></circle><path d="M5 7v12h12"></path><path d="m5 19 6-6"></path>

@@ -1,1 +1,1 @@
-<line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+<path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>

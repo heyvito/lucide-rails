@@ -1,1 +1,1 @@
-<rect x="3" y="14" width="7" height="7"></rect><rect x="3" y="3" width="7" height="7"></rect><line x1="14" y1="4" x2="21" y2="4"></line><line x1="14" y1="9" x2="21" y2="9"></line><line x1="14" y1="15" x2="21" y2="15"></line><line x1="14" y1="20" x2="21" y2="20"></line>
+<rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect><path d="M14 4h7"></path><path d="M14 9h7"></path><path d="M14 15h7"></path><path d="M14 20h7"></path>
