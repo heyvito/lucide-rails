@@ -27,7 +27,7 @@ module LucideRails
 
       file_path = LucideRails::GEM_ROOT.join("icons/stripped.bin.gz")
       data = ActiveSupport::Gzip.decompress(File.read(file_path))
-      @memory = data.split("\x00").to_h { |x| x.split(",") }
+      @memory = data.split("\x00").to_h { |x| x.split(",", 2) }
     end
   end
 end
