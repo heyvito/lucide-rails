@@ -2,6 +2,7 @@
 
 require "active_support/gzip"
 require_relative "lucide-rails/version"
+require_relative "lucide-rails/lucide_version"
 require_relative "lucide-rails/icon_provider"
 if defined?(Rails)
   require_relative "lucide-rails/rails_helper"
