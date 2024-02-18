@@ -5,7 +5,7 @@ require_relative "lib/lucide-rails/version"
 Gem::Specification.new do |spec|
   spec.name = "lucide-rails"
   spec.version = LucideRails::VERSION
-  spec.authors = ["Victor Gama"]
+  spec.authors = ["Vito Sartori"]
   spec.email = ["hey@vito.io"]
 
   spec.summary = "Ruby on Rails views helper method for rendering Lucide icons."
