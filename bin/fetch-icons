@@ -43,7 +43,7 @@ def system!(cmd, **options)
   err_writer.close
   err_reader.close
 
-  raise "Process #{cmd} exited with status #{status.exitstatus}: #{stdout}#{stderr}"  unless status.success?
+  raise "Process #{cmd} exited with status #{status.exitstatus}: #{stdout}#{stderr}" unless status.success?
 
   stdout
 end
@@ -62,9 +62,11 @@ def clone!
     tag
   end
   File.write "lib/lucide-rails/lucide_version.rb", <<~RUBY
-  module LucideRails
-    LUCIDE_VERSION = \"#{tag.strip}\".freeze
-  end
+    # frozen_string_literal: true
+
+    module LucideRails
+      LUCIDE_VERSION = "#{tag.strip}"
+    end
   RUBY
   FileUtils.mv Dir.glob("tmp/lucide/icons/*.svg"), "icons/original"
 end

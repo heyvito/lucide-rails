@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/gzip"
+require "active_support/core_ext/hash/indifferent_access"
 require_relative "lucide-rails/version"
 require_relative "lucide-rails/lucide_version"
 require_relative "lucide-rails/icon_provider"
@@ -21,7 +22,7 @@ module LucideRails
     "stroke-width" => "2",
     "stroke-linecap" => "round",
     "stroke-linejoin" => "round"
-  }.freeze
+  }.with_indifferent_access.freeze
 
   module_function
 
