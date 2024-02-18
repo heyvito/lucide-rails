@@ -8,12 +8,64 @@ require "active_support/gzip"
 # path to your application root.
 GEM_ROOT = File.expand_path("..", __dir__)
 
-def system!(*args)
-  system(*args) || abort("\n== Command #{args} failed ==")
+def system!(cmd, **options)
+  out_reader, out_writer = IO.pipe
+  err_reader, err_writer = IO.pipe
+  options.delete(:chdir) if options.fetch(:chdir, nil).nil?
+
+  opts = {
+    out: out_writer.fileno,
+    err: err_writer.fileno
+  }.merge(options)
+  pid = Process.spawn(ENV, *cmd, **opts)
+  mut = Mutex.new
+  cond = ConditionVariable.new
+
+  status = nil
+  Thread.new do
+    _pid, status = Process.wait2(pid)
+    mut.synchronize { cond.signal }
+  end
+
+  out_writer.close
+  err_writer.close
+
+  stdout = nil
+  stderr = nil
+  out_thread = Thread.new { stdout = out_reader.read }
+  err_thread = Thread.new { stderr = err_reader.read }
+  mut.synchronize { cond.wait(mut, 0.1) } while status.nil?
+
+  out_thread.join
+  err_thread.join
+
+  out_reader.close
+  err_writer.close
+  err_reader.close
+
+  raise "Process #{cmd} exited with status #{status.exitstatus}: #{stdout}#{stderr}"  unless status.success?
+
+  stdout
 end
 
 def clone!
+  puts "Clonning lucide-icons/lucide..."
   system! "git clone --depth 1 https://github.com/lucide-icons/lucide tmp/lucide"
+
+  puts "Checkout out latest version..."
+  tag = FileUtils.chdir "tmp/lucide" do
+    rev = system! "git rev-list --tags --max-count=1"
+    puts "Checkout out lucide at #{rev}"
+    tag = system! "git describe --tags #{rev}"
+    puts "Using latest lucide version: #{tag}"
+    system! "git checkout #{tag}"
+    tag
+  end
+  File.write "lib/lucide-rails/lucide_version.rb", <<~RUBY
+  module LucideRails
+    LUCIDE_VERSION = \"#{tag.strip}\".freeze
+  end
+  RUBY
   FileUtils.mv Dir.glob("tmp/lucide/icons/*.svg"), "icons/original"
 end
 
@@ -42,6 +94,12 @@ def strip!
   end
 end
 
+def commit!
+  version = system! "ruby -e \"require_relative 'lib/lucide-rails/lucide_version'; puts LucideRails::LUCIDE_VERSION\""
+  system! "git add icons lib/lucide-rails/lucide_version.rb"
+  system! "git commit -m 'chore: Bump to #{version.strip}'"
+end
+
 FileUtils.chdir GEM_ROOT do
   FileUtils.rm_rf Dir.glob("#{GEM_ROOT}/tmp/*")
   FileUtils.mkdir_p "icons/original"
@@ -49,6 +107,7 @@ FileUtils.chdir GEM_ROOT do
 
   clone!
   strip!
+  commit!
 ensure
   FileUtils.rm_rf Dir.glob("#{GEM_ROOT}/tmp/*")
 end
