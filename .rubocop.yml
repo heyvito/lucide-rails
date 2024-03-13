@@ -35,3 +35,11 @@ Naming/FileName:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - bin/fetch-icons
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - bin/fetch-icons

@@ -107,19 +107,19 @@ def extract_changes!
   added_icons = []
 
   status = system!("git status --porcelain")
-    .split("\n")
-    .filter { _1 =~ /icons\/original/ }
-    .map(&:strip)
-    .map { _1.split(' ', 2) }
-    .each do |i|
-      status, path = i
-      name = Pathname.new(path).basename.to_s.gsub(/\.svg/, '')
-      if status == "M"
-        updated_icons << name
-      else
-        added_icons << name
-      end
+           .split("\n")
+           .filter { _1 =~ %r{icons/original} }
+           .map(&:strip)
+           .map { _1.split(" ", 2) }
+           .each do |i|
+    status, path = i
+    name = Pathname.new(path).basename.to_s.gsub(".svg", "")
+    if status == "M"
+      updated_icons << name
+    else
+      added_icons << name
     end
+  end
   [added_icons, updated_icons]
 end
 
@@ -177,6 +177,7 @@ def amend_changelog!(file, data)
   cursor = 1
   lines[1...].each do |line|
     break if line.start_with? "## "
+
     cursor += 1
     if line.start_with? ADDED_HEADER
       section = :added
@@ -189,7 +190,7 @@ def amend_changelog!(file, data)
       next
     end
 
-    line = line.gsub(/^\s*-\s*/, '').strip
+    line = line.gsub(/^\s*-\s*/, "").strip
     next if line.empty?
 
     case section
