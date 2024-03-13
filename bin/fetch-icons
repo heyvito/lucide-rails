@@ -102,6 +102,115 @@ def commit!
   system! "git commit -m 'chore: Bump to #{version.strip}'"
 end
 
+def extract_changes!
+  updated_icons = []
+  added_icons = []
+
+  status = system!("git status --porcelain")
+    .split("\n")
+    .filter { _1 =~ /icons\/original/ }
+    .map(&:strip)
+    .map { _1.split(' ', 2) }
+    .each do |i|
+      status, path = i
+      name = Pathname.new(path).basename.to_s.gsub(/\.svg/, '')
+      if status == "M"
+        updated_icons << name
+      else
+        added_icons << name
+      end
+    end
+  [added_icons, updated_icons]
+end
+
+UNRELEASED_HEADER = "## [Unreleased]"
+ADDED_HEADER = "### Added"
+UPDATED_HEADER = "### Updated"
+OTHER_HEADER = "### Other Changes"
+
+def update_changelog!(data)
+  file = File.read("CHANGELOG.md")
+  if file.start_with? UNRELEASED_HEADER
+    amend_changelog!(file, data)
+  else
+    append_changelog!(file, data)
+  end
+end
+
+def make_section(data)
+  section = [UNRELEASED_HEADER]
+  added, updated, other = data
+  if added && !added.empty?
+    section << ""
+    section << ADDED_HEADER
+    added.each { section << " - `#{_1}`" }
+  end
+
+  if updated && !updated.empty?
+    section << ""
+    section << UPDATED_HEADER
+    updated.each { section << " - `#{_1}`" }
+  end
+
+  if other && !other.empty?
+    section << ""
+    section << OTHER_HEADER
+    other.each { section << " - #{_1}" }
+  end
+
+  section << ""
+  section << ""
+end
+
+def append_changelog!(file, data)
+  section = make_section(data)
+  File.write("CHANGELOG.md", "#{section.join("\n")}#{file}")
+end
+
+def amend_changelog!(file, data)
+  added = Set.new
+  updated = Set.new
+  other = []
+
+  lines = file.split("\n")
+  section = :none
+  cursor = 1
+  lines[1...].each do |line|
+    break if line.start_with? "## "
+    cursor += 1
+    if line.start_with? ADDED_HEADER
+      section = :added
+      next
+    elsif line.start_with? UPDATED_HEADER
+      section = :updated
+      next
+    elsif line.start_with? OTHER_HEADER
+      section = :other
+      next
+    end
+
+    line = line.gsub(/^\s*-\s*/, '').strip
+    next if line.empty?
+
+    case section
+    when :added
+      added << line.gsub(/`([^`]+)`/, '\1')
+    when :updated
+      updated << line.gsub(/`([^`]+)`/, '\1')
+    when :other
+      other << line
+    end
+  end
+
+  git_added, git_updated = data
+  git_added.each { added << _1 }
+  git_updated.each { updated << _1 }
+
+  original = lines[cursor...].join("\n")
+  section = make_section([added, updated, other])
+  File.write("CHANGELOG.md", "#{section.join("\n")}#{original}")
+end
+
 FileUtils.chdir GEM_ROOT do
   FileUtils.rm_rf Dir.glob("#{GEM_ROOT}/tmp/*")
   FileUtils.mkdir_p "icons/original"
@@ -109,6 +218,8 @@ FileUtils.chdir GEM_ROOT do
 
   clone!
   strip!
+  changes = extract_changes!
+  update_changelog!(changes)
   commit!
 ensure
   FileUtils.rm_rf Dir.glob("#{GEM_ROOT}/tmp/*")
