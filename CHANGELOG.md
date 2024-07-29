@@ -1,3 +1,6 @@
+## [0.5.1] - 2024-07-29
+- Missed a lockfile update. This release has the same contents as 0.5.0
+
 ## [0.5.0] - 2024-07-29
 
 ### Added
