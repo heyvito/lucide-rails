@@ -1,4 +1,4 @@
-## [Unreleased]
+## [0.5.0] - 2024-07-29
 
 ### Added
  - `biceps-flexed`
