@@ -1,1 +1,1 @@
-<polyline points="7 8 3 12 7 16"></polyline><line x1="21" x2="11" y1="12" y2="12"></line><line x1="21" x2="11" y1="6" y2="6"></line><line x1="21" x2="11" y1="18" y2="18"></line>
+<path d="M21 12H11"></path><path d="M21 18H11"></path><path d="M21 6H11"></path><path d="m7 8-4 4 4 4"></path>
