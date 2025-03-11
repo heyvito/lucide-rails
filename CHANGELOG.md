@@ -1,3 +1,23 @@
+## [Unreleased]
+
+### Added
+ - `circle-small`
+ - `mars-stroke`
+ - `mars`
+ - `non-binary`
+ - `shield-user`
+ - `square-round-corner`
+ - `transgender`
+ - `venus-and-mars`
+ - `venus`
+
+### Updated
+ - `beef`
+ - `brackets`
+ - `circle-slash-2`
+ - `expand`
+ - `package`
+
 ## [0.6.0] - 2025-01-17
 
 ### Added
