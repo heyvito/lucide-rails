@@ -50,7 +50,7 @@ end
 
 def clone!
   puts "Clonning lucide-icons/lucide..."
-  system! "git clone --depth 1 https://github.com/lucide-icons/lucide tmp/lucide"
+  system! "git clone --depth 1 --no-single-branch https://github.com/lucide-icons/lucide tmp/lucide"
 
   puts "Checkout out latest version..."
   tag = FileUtils.chdir "tmp/lucide" do
