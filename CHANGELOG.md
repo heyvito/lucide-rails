@@ -1,3 +1,7 @@
+## [0.7.1] - 2025-06-25
+
+- Updated webrick dependency to 1.8.2. This release has the same contents as 0.7.0.
+
 ## [0.7.0] - 2025-06-25
 
 ### Added
