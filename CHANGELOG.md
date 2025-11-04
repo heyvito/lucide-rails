@@ -42,6 +42,26 @@
  - `user-star`
  - `vector-square`
  - `wifi-sync`
+ - `birdhouse`
+ - `clock-check`
+ - `file-braces-corner`
+ - `file-braces`
+ - `file-check-corner`
+ - `file-code-corner`
+ - `file-exclamation-point`
+ - `file-headphone`
+ - `file-minus-corner`
+ - `file-plus-corner`
+ - `file-search-corner`
+ - `file-signal`
+ - `file-type-corner`
+ - `file-x-corner`
+ - `gamepad-directional`
+ - `git-branch-minus`
+ - `helicopter`
+ - `monitor-cloud`
+ - `motorbike`
+ - `solar-panel`
 
 ### Updated
  - `a-arrow-down`
@@ -234,6 +254,58 @@
  - `wallpaper`
  - `watch`
  - `wrench`
+ - `building-2`
+ - `calendar-fold`
+ - `combine`
+ - `file-archive`
+ - `file-axis-3d`
+ - `file-badge`
+ - `file-box`
+ - `file-chart-column-increasing`
+ - `file-chart-column`
+ - `file-chart-line`
+ - `file-chart-pie`
+ - `file-check`
+ - `file-code`
+ - `file-cog`
+ - `file-diff`
+ - `file-digit`
+ - `file-down`
+ - `file-image`
+ - `file-input`
+ - `file-key`
+ - `file-lock`
+ - `file-minus`
+ - `file-music`
+ - `file-output`
+ - `file-pen-line`
+ - `file-pen`
+ - `file-play`
+ - `file-plus`
+ - `file-question-mark`
+ - `file-scan`
+ - `file-search`
+ - `file-sliders`
+ - `file-spreadsheet`
+ - `file-symlink`
+ - `file-terminal`
+ - `file-text`
+ - `file-type`
+ - `file-up`
+ - `file-user`
+ - `file-video-camera`
+ - `file-volume`
+ - `file-x`
+ - `file`
+ - `flame`
+ - `receipt-text`
+ - `replace-all`
+ - `replace`
+ - `shredder`
+ - `square-m`
+ - `sticker`
+ - `sticky-note`
+ - `sword`
 
 ## [0.7.1] - 2025-06-25
 
