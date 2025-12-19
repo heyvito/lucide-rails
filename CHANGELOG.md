@@ -1,3 +1,13 @@
+## [0.7.3]
+
+This release mainly updates dependencies, but contains the same contents of `v0.7.2`. 
+
+Updated dependencies:
+- `rexml`: `3.3.9` -> `3.4.4`
+- `nokogiri`: `1.16.7` -> `1.18.10`
+- `racc`: `1.8.0` -> `1.8.1`
+- `rack`: `3.1.7` -> `3.2.4`
+
 ## [0.7.2]
 
 ### Added

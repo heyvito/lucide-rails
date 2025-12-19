@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lucide-rails (0.7.2)
+    lucide-rails (0.7.3)
       railties (>= 4.1.0)
 
 GEM
