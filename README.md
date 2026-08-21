@@ -1,5 +1,9 @@
 # lucide-rails
 
+firedev fork of [heyvito/lucide-rails](https://github.com/heyvito/lucide-rails).
+The helper is unchanged; the bundled Lucide snapshot is refreshed to 1.33.0
+(`user-round-key` and other icons missing from 0.7.4).
+
 `lucide-rails` provides a view helper for using [Lucide icons](https://lucide.dev)
 on Rails applications
 
